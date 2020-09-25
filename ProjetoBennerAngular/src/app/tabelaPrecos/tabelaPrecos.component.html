@@ -1,0 +1,70 @@
+<div class="row">
+
+  <div *ngIf="tabelaPrecoSelecionado" class="col-sm-6">
+
+    <app-titulo [titulo]="(tabelaPrecoSelecionado.id === 0 ? 'Nova Tabela de Preco' : 'Código: ' + tabelaPrecoSelecionado.id)">
+                <button class="btn btn-sm btn-outline-danger" (click)="voltar() ">FECHAR</button>
+              </app-titulo>
+
+
+      <form [formGroup]="tabelaPrecoForm" (submit)="tabelaPrecoSubmit()">
+          <div class="form-group ">
+              <label for="formGroupExampleInput ">Vigência Inicial</label>
+              <input formControlName="vigenciaInicial" type=" text " class="form-control ">
+          </div>
+          <div class="form-group ">
+              <label for="formGroupExampleInput2 ">Vigência Final</label>
+              <input formControlName="vigenciaFinal" type=" text " class="form-control ">
+          </div>
+          <div class="form-group ">
+            <label for="formGroupExampleInput2 ">Valor da Hora</label>
+            <input formControlName="valorHora" type=" text " class="form-control ">
+        </div>
+          <div class="row form-gruup ">
+              <button class="btn btn-success" [disabled]="!tabelaPrecoForm.valid">Salvar</button>
+          </div>
+      </form>
+
+  </div>
+  <br>
+  <div [ngClass]="{ 'col-sm-6': tabelaPrecoSelecionado, 'col-sm-12': !tabelaPrecoSelecionado} ">
+      <app-titulo [titulo]="titulo ">
+        <button class="btn btn-sm btn-success" (click)="novoTabelaPreco()">Cadastrar Tabela de Preco</button>
+      </app-titulo>
+      <table class="table">
+          <thead class="thead-light">
+              <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Vigência Inicia</th>
+                  <th scope="col">Vigência Final</th>
+                  <th scope="col">Valor da Hora</th>
+                  <th scope="col">Excluir</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr *ngFor="let tabelaPreco of tabelaPrecos">
+                  <td scope="row ">{{tabelaPreco.id}}</td>
+                  <td>{{tabelaPreco.vigenciaInicial}}</td>
+                  <td>{{tabelaPreco.vigenciaFinal}}</td>
+                  <td>{{tabelaPreco.valorHora}}</td>
+                  <td>
+                      <div class="btn-group">
+                          <button (click)="excluirTabelaPreco(tabelaPreco)"class=" text-dark btn btn-sm btn-outline-danger">Excluir</button>
+                      </div>
+                  </td>
+              </tr>
+          </tbody>
+      </table>
+  </div>
+</div>
+
+<ng-template #template>
+  <div class="modal-body">
+      <app-veiculos></app-veiculos>
+  </div>
+  <div class="modal-footer">
+      <button type="button" class="btn pull-right" aria-label="Close" (click)="modalRef.hide()">
+        FECHAR
+    </button>
+  </div>
+</ng-template>
